@@ -12,5 +12,6 @@ public class ClienteDto {
     private String cedula;
     private String telefono;
     private List<DireccionDto> direcciones;
+    private List<CuentaDto> cuentas;
 }
 

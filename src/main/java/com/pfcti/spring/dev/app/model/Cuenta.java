@@ -13,8 +13,10 @@ public class Cuenta {
     private int id;
     private String numero;
     private String tipo;
+    private boolean activa;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
+
 }

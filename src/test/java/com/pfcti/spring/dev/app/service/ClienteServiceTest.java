@@ -66,14 +66,18 @@ class ClienteServiceTest {
 
     @Test
     void obtenerClientes() {
-        clienteService.obtenerClientes()
-                .stream()
-                .map(
-                    cliente ->{
-                    System.out.println(cliente.getNombre() + " " + cliente.getApellidos());
-                    return cliente;
-                }
-        ).collect(Collectors.toList());
-        assertEquals(1,1);
+        List<ClienteDto> clientesDto = clienteService.obtenerClientes();
+        clienteService
+                .obtenerClientes()
+                .forEach(cliente -> System.out.println(">>>>> CLIENTE EXISTENTE: " + cliente.getApellidos()));
+
+        assertEquals(2,clientesDto.size());
+    }
+
+    @Test
+    void obtenerClientesPorCodigoISOPaisYCuentasActivas() {
+        List<ClienteDto> clienteDtos = clienteService.obtenerClientesPorCodigoISOPaisYCuentasActivas("CR");
+        clienteDtos.forEach(clienteDto -> {System.out.println("Cliente: " + clienteDto.getApellidos());});
+        assertEquals(1, clienteDtos.size());
     }
 }
