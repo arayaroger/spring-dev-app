@@ -76,7 +76,7 @@ class ClienteServiceTest {
 
     @Test
     void obtenerClientesPorCodigoISOPaisYCuentasActivas() {
-        List<ClienteDto> clienteDtos = clienteService.obtenerClientesPorCodigoISOPaisYCuentasActivas("CR");
+        List<ClienteDto> clienteDtos = clienteService.obtenerClientesPorCodigoISOPaisYCuentasActivas("EC");
         clienteDtos.forEach(clienteDto -> {System.out.println("Cliente: " + clienteDto.getApellidos());});
         assertEquals(1, clienteDtos.size());
     }
