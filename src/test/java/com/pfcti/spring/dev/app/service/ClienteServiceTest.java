@@ -66,8 +66,10 @@ class ClienteServiceTest {
 
     @Test
     void obtenerClientes() {
-        clienteService.obtenerClientes().stream().map(
-                cliente ->{
+        clienteService.obtenerClientes()
+                .stream()
+                .map(
+                    cliente ->{
                     System.out.println(cliente.getNombre() + " " + cliente.getApellidos());
                     return cliente;
                 }
