@@ -80,4 +80,37 @@ class ClienteServiceTest {
         clienteDtos.forEach(clienteDto -> {System.out.println("Cliente: " + clienteDto.getApellidos());});
         assertEquals(1, clienteDtos.size());
     }
+
+    @Test
+    void eliminarCliente() {
+        clienteService.eliminarCliente(1);
+        assertEquals(1,1);
+    }
+
+    @Test
+    void buscarPorApellidos() {
+        List<ClienteDto> clientesDto = clienteService.buscarPorApellidos("PEREZ");
+        clientesDto.forEach(clienteDto -> {System.out.println("Cliente: " + clienteDto.getApellidos());});
+        assertEquals(1,clientesDto.size());
+    }
+
+    @Test
+    void buscarPorApellidosNative() {
+        List<ClienteDto> clientesDto = clienteService.buscarPorApellidosNative("PEREZ");
+        clientesDto.forEach(clienteDto -> {System.out.println("Cliente: " + clienteDto.getApellidos());});
+        assertEquals(1,clientesDto.size());
+    }
+
+    @Test
+    void actualizarNombrePorApellido() {
+        ClienteDto clienteDtoInicial = clienteService.buscarPorApellidos("SANCHEZ").get(0);
+        System.out.println("El cliente inicial es " + clienteDtoInicial.getNombre() + " "+ clienteDtoInicial.getApellidos());
+
+        clienteService.actualizarNombrePorApellido("nuevoNombre",clienteDtoInicial.getApellidos());
+
+        ClienteDto clienteDtoFinal = clienteService.buscarPorApellidos("SANCHEZ").get(0);
+        System.out.println("El cliente modificado es " + clienteDtoFinal.getNombre() + " "+ clienteDtoFinal.getApellidos());
+
+        assertNotEquals(clienteDtoInicial.getNombre(),clienteDtoFinal.getNombre());
+    }
 }

@@ -2,18 +2,26 @@ package com.pfcti.spring.dev.app.service;
 
 import com.pfcti.spring.dev.app.dto.ClienteDto;
 import com.pfcti.spring.dev.app.model.Cliente;
-import com.pfcti.spring.dev.app.repository.ClienteRepository;
+import com.pfcti.spring.dev.app.repository.*;
+import jakarta.persistence.Tuple;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 @AllArgsConstructor
 public class ClienteService {
     private ClienteRepository clienteRepository;
+    private CuentaRepository cuentaRepository;
+    private TarjetaRepository tarjetaRepository;
+    private InversionRepository inversionRepository;
+    private DireccionRepository direccionRepository;
 
     public void insertarCliente(ClienteDto clienteDto){
         Cliente cliente = new Cliente();
@@ -92,5 +100,44 @@ public class ClienteService {
         });
 
         return clientesDto;
+    }
+
+    public void eliminarCliente(Integer clienteId){
+        tarjetaRepository.deleteAllByCliente_Id(clienteId);
+        inversionRepository.deleteAllByCliente_Id(clienteId);
+        direccionRepository.deleteAllByCliente_Id(clienteId);
+        cuentaRepository.deleteAllByCliente_Id(clienteId);
+        clienteRepository.deleteById(clienteId);
+    }
+
+    public List<ClienteDto> buscarPorApellidos(String apellidos){
+        List<ClienteDto> clientesDtos = new ArrayList<>();
+        List<Cliente> clientes = clienteRepository.buscarPorApellidos(apellidos);
+        clientes.forEach(cliente ->{
+            clientesDtos.add(fromClienteToClienteDto(cliente));
+        });
+
+        return clientesDtos;
+    }
+
+    public List<ClienteDto> buscarPorApellidosNative(String apellidos){
+        List<ClienteDto> clientesDtos = new ArrayList<>();
+        List<Tuple> tuplas = clienteRepository.buscarPorApellidosNative(apellidos);
+        tuplas.forEach(tupla ->{
+            ClienteDto clienteDto = new ClienteDto();
+            clienteDto.setId((Integer)tupla.get("Id"));
+            clienteDto.setNombre((String) tupla.get("nombre"));
+            clienteDto.setApellidos((String) tupla.get("apellidos"));
+            clienteDto.setCedula((String) tupla.get("cedula"));
+            clienteDto.setTelefono((String) tupla.get("telefono"));
+            clienteDto.setPais((String)tupla.get("pais"));
+            clientesDtos.add(clienteDto);
+        });
+
+        return clientesDtos;
+    }
+
+    public void actualizarNombrePorApellido(String nombre, String apellidos){
+        clienteRepository.updateClienteByQuery(nombre, apellidos);
     }
 }
