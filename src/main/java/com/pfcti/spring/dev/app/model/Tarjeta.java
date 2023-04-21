@@ -13,6 +13,7 @@ public class Tarjeta {
     private int id;
     private String numero;
     private String tipo;
+    private Boolean activa;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")

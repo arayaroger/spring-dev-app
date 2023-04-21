@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -139,5 +140,29 @@ public class ClienteService {
 
     public void actualizarNombrePorApellido(String nombre, String apellidos){
         clienteRepository.updateClienteByQuery(nombre, apellidos);
+    }
+
+    public List<ClienteDto> buscarClientePorApellidosyNombre (String apellidos, String nombre){
+        return clienteRepository.findClientesByApellidosAndNombre(apellidos, nombre)
+                .stream()
+                .map(this::fromClienteToClienteDto)
+                .collect(Collectors.toList());
+    }
+
+
+    public List<ClienteDto> obtenerClientesExtranjerosYTarjetasInactivas(String codigoISO){
+//        return clienteRepository.buscarClientesExtranjerosPorEstadoTarjeta(codigoISO)
+//                .stream()
+//                .map(this::fromClienteToClienteDto)
+//                .collect(Collectors.toList());
+        List<Cliente> clientes = clienteRepository.buscarClientesExtranjerosPorEstadoTarjeta(codigoISO);
+        List<ClienteDto> clientesDto = new ArrayList<>();
+
+        clientes.forEach(cliente ->{
+            clientesDto.add(fromClienteToClienteDto(cliente));
+        });
+
+        return clientesDto;
+
     }
 }
