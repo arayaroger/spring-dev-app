@@ -151,18 +151,21 @@ public class ClienteService {
 
 
     public List<ClienteDto> obtenerClientesExtranjerosYTarjetasInactivas(String codigoISO){
-//        return clienteRepository.buscarClientesExtranjerosPorEstadoTarjeta(codigoISO)
-//                .stream()
-//                .map(this::fromClienteToClienteDto)
-//                .collect(Collectors.toList());
-        List<Cliente> clientes = clienteRepository.buscarClientesExtranjerosPorEstadoTarjeta(codigoISO);
-        List<ClienteDto> clientesDto = new ArrayList<>();
+        return clienteRepository.findClientesByPaisNotAndTarjetas_ActivaIsFalse(codigoISO)
+                .stream()
+                .map(this::fromClienteToClienteDto)
+                .collect(Collectors.toList());
 
-        clientes.forEach(cliente ->{
-            clientesDto.add(fromClienteToClienteDto(cliente));
-        });
+        //List<Cliente> clientes = clienteRepository.buscarClientesExtranjerosPorEstadoTarjeta(codigoISO);
 
-        return clientesDto;
+//        List<Cliente> clientes = clienteRepository.findClientesByPaisNotAndTarjetas_ActivaIsFalse(codigoISO);
+//        List<ClienteDto> clientesDto = new ArrayList<>();
+//
+//        clientes.forEach(cliente ->{
+//            clientesDto.add(fromClienteToClienteDto(cliente));
+//        });
+//
+//        return clientesDto;
 
     }
 }
