@@ -12,7 +12,10 @@ import java.util.List;
 public interface ClienteRepository extends JpaRepository<Cliente,Integer> {
     List<Cliente> findClientesByPaisAndCuentas_ActivaIsTrue(String pais);
 
-    @Query(value="select c1_0.id,c1_0.nombre,c1_0.apellidos,c1_0.cedula,c1_0.telefono,c1_0.pais from Cliente  c1_0 left join Tarjeta c2_0 on c1_0.id=c2_0.cliente.id where c1_0.pais<>:paisNacional and not c2_0.activa")
+//    @Query(value="select c1_0.id,c1_0.nombre,c1_0.apellidos,c1_0.cedula,c1_0.telefono,c1_0.pais from Cliente c1_0 left join Tarjeta c2_0 on c1_0.id=c2_0.cliente.id where c1_0.pais<>:paisNacional and not c2_0.activa")
+//    List<Cliente> buscarClientesExtranjerosPorEstadoTarjeta(String paisNacional);
+
+    @Query(value="select c1_0.id,c1_0.nombre,c1_0.apellidos,c1_0.cedula,c1_0.telefono,c1_0.pais from Cliente c1_0 left join Tarjeta c2_0 on c1_0.id=c2_0.cliente_id where c1_0.pais!=:paisNacional and c2_0.activa = false",nativeQuery = true)
     List<Cliente> buscarClientesExtranjerosPorEstadoTarjeta(String paisNacional);
 
     @Query(value = "select c from Cliente c where c.apellidos = :apellidos")
