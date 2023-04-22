@@ -1,5 +1,7 @@
 package com.pfcti.spring.dev.app.criteria;
 
+import com.pfcti.spring.dev.app.dto.ClienteDto;
+import com.pfcti.spring.dev.app.model.Cliente;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +27,32 @@ public class ClienteSpecification {
             return null;
         }
     }
+
+    private Specification<Cliente> apellidoCriteria(ClienteDto clienteDto){
+        return like("apellidos",clienteDto.getApellidos());
+    }
+
+    private Specification<Cliente> nombreCriteria(ClienteDto clienteDto){
+        return like("nombre",clienteDto.getNombre());
+    }
+
+    private Specification<Cliente> cedulaCriteria(ClienteDto clienteDto){
+        return equals("cedula",clienteDto.getCedula());
+    }
+
+    private Specification<Cliente> telefonoCriteria(ClienteDto clienteDto){
+        return equals("telefono",clienteDto.getTelefono());
+    }
+
+    public Specification<Cliente> buildFilter(ClienteDto clienteDto){
+        System.out.println("Busqueda por criterios: "+ clienteDto);
+        return Specification
+                .where(apellidoCriteria(clienteDto))
+                .and(nombreCriteria(clienteDto))
+                .and(cedulaCriteria(clienteDto))
+                .and(telefonoCriteria(clienteDto));
+    }
+
+
 
 }

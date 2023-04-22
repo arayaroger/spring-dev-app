@@ -128,4 +128,42 @@ class ClienteServiceTest {
         clienteDtos.forEach(clienteDto -> {System.out.println("Cliente: " + clienteDto.getApellidos());});
         assertEquals(1, clienteDtos.size());
     }
+
+    @Test
+    void buscarDinamicamentePorCriterios() {
+        List<ClienteDto> clienteDtos = clienteService.buscarDinamicamentePorCriterios(new ClienteDto());
+        assertFalse(clienteDtos.isEmpty());
+        clienteDtos.forEach(cliente -> System.out.println(">>>>> CLIENTE EXISTENTE: " + cliente.getApellidos()));
+        assertTrue(clienteDtos.size() >=2);
+
+        ClienteDto clienteDto = new ClienteDto();
+        clienteDto.setApellidos("SANCHEZ");
+        clienteDtos = clienteService.buscarDinamicamentePorCriterios(clienteDto);
+        clienteDtos.forEach(cliente -> System.out.println(">>>>> CLIENTE EXISTENTE CON FILTRO: " + cliente.getApellidos()));
+        assertTrue(clienteDtos.size() >=4 );
+
+        clienteDto = new ClienteDto();
+        clienteDto.setApellidos("SANCHEZ");
+        clienteDto.setNombre("DAM");
+        clienteDtos = clienteService.buscarDinamicamentePorCriterios(clienteDto);
+        clienteDtos.forEach(cliente -> System.out.println(">>>>> CLIENTE EXISTENTE CON FILTRO 2: " + cliente.getApellidos()));
+        assertTrue(clienteDtos.size() >=2 );
+
+        clienteDto = new ClienteDto();
+        clienteDto.setApellidos("SANCHEZ");
+        clienteDto.setCedula("111");
+        clienteDtos = clienteService.buscarDinamicamentePorCriterios(clienteDto);
+        clienteDtos.forEach(cliente -> System.out.println(">>>>> CLIENTE EXISTENTE CON FILTRO 3: " + cliente.getApellidos()));
+        assertTrue(clienteDtos.size() >=2 );
+
+        clienteDto = new ClienteDto();
+        clienteDto.setCedula("111");
+        clienteDto.setApellidos("SANCHEZ C");
+        clienteDto.setNombre("DAM");
+        clienteDtos = clienteService.buscarDinamicamentePorCriterios(clienteDto);
+        clienteDtos.forEach(cliente -> System.out.println(">>>>> CLIENTE EXISTENTE CON FILTRO 4: " + cliente.getApellidos()));
+        assertTrue(clienteDtos.size() >=1 );
+
+
+    }
 }
