@@ -33,4 +33,14 @@ public interface ClienteRepository extends JpaRepository<Cliente,Integer>, JpaSp
     void updateClienteByQuery(String nombre,String apellidos);
 
     List<Cliente> findClientesByApellidosAndNombre(String apellidos, String nombre);
+
+    List<Cliente> findClientesByCedula(String cedula);
+
+    List<Cliente> findClientesByNombreOrApellidos(String nombres, String apellidos);
+
+    List<Cliente> findClientesByNombreContainingIgnoreCaseOrNombreContainingIgnoreCase(String nombres, String apellidos);
+
+
+
+
 }
