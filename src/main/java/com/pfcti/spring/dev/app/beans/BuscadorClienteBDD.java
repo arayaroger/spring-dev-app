@@ -6,25 +6,19 @@ import com.pfcti.spring.dev.app.dto.enums.ClienteQueryType;
 import com.pfcti.spring.dev.app.model.Cliente;
 import com.pfcti.spring.dev.app.repository.ClienteRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdministradorClientes {
-    private ClienteRepository clienteRepository;
-    private ClienteQueryType defaultClienteQueryType;
+@Service("baseDeDatos")
+public class BuscadorClienteBDD implements BuscadorClientes{
 
-//    public AdministradorClientes(ClienteRepository clienteRepository) {
-//        this.clienteRepository = clienteRepository;
-//    }
-
-    public AdministradorClientes(ClienteRepository clienteRepository, ClienteQueryType defaultClienteQueryType) {
-        System.out.println(">>>>> Administrador Clientes INSTANCIA " + this);
-        this.clienteRepository = clienteRepository;
-        this.defaultClienteQueryType = defaultClienteQueryType;
-    }
-
-    public List<ClienteDto> obtenerListaClientePorCriterio(ClienteQueryDto clienteQueryDto){
+    @Autowired
+    ClienteRepository clienteRepository;
+    @Override
+    public List<ClienteDto> obtenerListaClientes(ClienteQueryDto clienteQueryDto) {
         List<Cliente> clientes = null;
         if(ClienteQueryType.CEDULA.equals(clienteQueryDto.getClienteQueryType())){
             clientes = clienteRepository.findClientesByCedula(clienteQueryDto.getTextoBusqueda());
@@ -33,10 +27,10 @@ public class AdministradorClientes {
             clientes = clienteRepository.findClientesByNombreContainingIgnoreCaseOrApellidosContainingIgnoreCase(clienteQueryDto.getTextoBusqueda(),clienteQueryDto.getTextoBusqueda());
         }
 
-            return  clientes
-                    .stream()
-                    .map(this::fromClienteToClienteDto)
-                    .collect(Collectors.toList());
+        return  clientes
+                .stream()
+                .map(this::fromClienteToClienteDto)
+                .collect(Collectors.toList());
     }
 
     private ClienteDto fromClienteToClienteDto(Cliente cliente){
@@ -50,5 +44,4 @@ public class AdministradorClientes {
 
         return clienteDto;
     }
-
 }
