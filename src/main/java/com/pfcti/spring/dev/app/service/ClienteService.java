@@ -33,13 +33,11 @@ public class ClienteService {
         cliente.setApellidos(clienteDto.getApellidos());
         cliente.setCedula(clienteDto.getCedula());
         cliente.setTelefono(clienteDto.getTelefono());
+        cliente.setPais(clienteDto.getPais());
 
         clienteRepository.save(cliente);
     }
 
-    // public ClienteDto buscarClientePorId(int id){
-    //     clienteRepository.findById(id);
-    // }
 
     public ClienteDto obtenerCliente(int clienteId){
         Cliente cliente = clienteRepository.findById(clienteId)
@@ -53,6 +51,7 @@ public class ClienteService {
         clienteDto.setApellidos(cliente.getApellidos());
         clienteDto.setCedula(cliente.getCedula());
         clienteDto.setTelefono(cliente.getTelefono());
+        clienteDto.setPais(cliente.getPais());
 
         return clienteDto;
     }
@@ -69,6 +68,7 @@ public class ClienteService {
         cliente.setApellidos(clienteDto.getApellidos());
         cliente.setCedula(clienteDto.getCedula());
         cliente.setTelefono(clienteDto.getTelefono());
+        cliente.setPais(clienteDto.getPais());
 
         clienteRepository.save(cliente);
     }
