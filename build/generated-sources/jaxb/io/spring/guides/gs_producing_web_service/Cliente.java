@@ -196,4 +196,15 @@ public class Cliente {
         this.pais = value;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", cedula='" + cedula + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", pais='" + pais + '\'' +
+                '}';
+    }
 }

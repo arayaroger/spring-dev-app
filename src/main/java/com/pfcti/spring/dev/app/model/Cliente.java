@@ -34,4 +34,19 @@ import java.util.List;
 
     @OneToMany(mappedBy = "cliente")//, cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Tarjeta> tarjetas;
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", cedula='" + cedula + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", pais='" + pais + '\'' +
+                ", direcciones=" + direcciones +
+                ", cuentas=" + cuentas +
+                ", tarjetas=" + tarjetas +
+                '}';
+    }
 }

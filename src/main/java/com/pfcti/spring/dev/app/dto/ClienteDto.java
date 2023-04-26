@@ -18,5 +18,17 @@ public class ClienteDto {
     private String pais;
     private List<DireccionDto> direcciones;
     private List<CuentaDto> cuentas;
+
+    @Override
+    public String toString() {
+        return "ClienteDto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", cedula='" + cedula + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", pais='" + pais + '\'' +
+                '}';
+    }
 }
 
