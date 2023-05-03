@@ -78,6 +78,10 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	jaxb("org.glassfish.jaxb:jaxb-xjc")
 
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 }
 
 tasks.named('test') {
