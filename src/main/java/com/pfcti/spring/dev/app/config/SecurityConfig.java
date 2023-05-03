@@ -30,15 +30,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().requestMatchers(HttpMethod.DELETE).
-                hasRole("ADMIN").requestMatchers("/v1/api/cliente/**", "/v1/api/employee/**").
-                hasAnyRole("USER", "ADMIN").
-                requestMatchers("v1/api/login/**").
-                anonymous().anyRequest().
-                authenticated().
-                and().
-                oauth2ResourceServer().jwt()
+        http.csrf() .disable()
+                .authorizeRequests()
+                .requestMatchers(HttpMethod.DELETE)
+                .hasRole("admin") .requestMatchers("/v1/api/cliente/**","/v1/api/employee/**") .hasAnyRole("user", "admin")
+                .requestMatchers("/v1/api/login/**")
+                .anonymous()
+                .anyRequest()
+                .authenticated()
+                .and().
+                oauth2ResourceServer()
+                .jwt()
                 .jwtAuthenticationConverter(new CustomJwtAuthenticationConverter());
-        return http.build();
-    }
+        return http.build(); }
 }
